@@ -7,20 +7,20 @@ import { AppComponent } from './app.component';
 import { CatalogComponent } from "./catalog/catalog.component";
 import { RegisterComponent } from "./users/register.component";
 import { SignInComponent } from "./users/sign-in.component";
-import { LoadingSpinnerComponent } from "./components/loading-spinner.component";
 import { CatalogRepositoryService } from "./catalog/catalog-repository.service"
 import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     CatalogComponent,
     RegisterComponent,
-    SignInComponent,
-    LoadingSpinnerComponent
+    SignInComponent
   ],
   imports: [
     CoreModule,
+    SharedModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
