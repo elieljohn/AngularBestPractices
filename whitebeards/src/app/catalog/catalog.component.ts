@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CatalogRepositoryService } from './catalog-repository.service';
+import { CatalogRepositoryService } from "../catalog/catalog-repository.service"
 import { UserRepositoryService } from "../services/user-repository.service"
 import { IClass } from './class.model';
 import { FilterClassesService } from './filter-classes.service';
@@ -12,14 +12,24 @@ import { FilterClassesService } from './filter-classes.service';
 export class CatalogComponent implements OnInit {
   classes: IClass[] = [];
   visibleClasses: IClass[] = [];
+  orderByField: string = '';
 
-  constructor(private catalogRepository: CatalogRepositoryService,
-              public userRepository: UserRepositoryService,
-              private filterClassesService: FilterClassesService  ) { }
+  constructor(public userRepository: UserRepositoryService, private catalogRepository: CatalogRepositoryService, private filterClassesService: FilterClassesService) { }
 
   ngOnInit() {
     this.catalogRepository.getCatalog()
       .subscribe((classes: IClass[]) => { this.classes = classes; this.applyFilter('') });
+  }
+
+  mutateFirstProfessor() {
+    this.visibleClasses[0].professor = "Lucarion";
+  }
+
+  updateFirstProfessor() {
+    this.visibleClasses = [
+      { ...this.visibleClasses[0], professor: "Lucarion" },
+      ...this.visibleClasses.slice(1)
+    ];
   }
 
   enroll(classToEnroll: IClass) {
@@ -43,5 +53,4 @@ export class CatalogComponent implements OnInit {
   applyFilter(filter: string) {
     this.visibleClasses = this.filterClassesService.filterClasses(filter, this.classes);
   }
-
 }
